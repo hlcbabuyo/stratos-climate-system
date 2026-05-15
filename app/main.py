@@ -37,11 +37,11 @@ def read_root():
 
 @app.post("/predict")
 def predict_extreme_heat(payload: WeatherPayload):
+    global model
     if model is None:
         # Check again in case it was added while running
         try:
             if os.path.exists(MODEL_PATH):
-                global model
                 model = joblib.load(MODEL_PATH)
             else:
                 raise HTTPException(status_code=503, detail="Model not loaded. Please ensure model.pkl exists in the app directory.")

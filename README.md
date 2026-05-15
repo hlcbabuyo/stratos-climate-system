@@ -5,13 +5,14 @@
 ## Overview
 STRATOS is a dual-purpose Machine Learning portfolio project and academic submission. It focuses on building a machine learning pipeline to analyze climate anomalies and extreme heat events in Misamis Oriental, Philippines. 
 
-The project seamlessly integrates automated data engineering, advanced machine learning (supervised, unsupervised, and reinforcement learning), and production deployment via a RESTful API.
+The project seamlessly integrates automated data engineering, advanced machine learning (supervised, unsupervised, and reinforcement learning), and production deployment via a RESTful API and an interactive Streamlit Web Dashboard.
 
 ## Repository Structure
 ```
 stratos-climate-system/
 ├── app/
 │   ├── main.py                  # FastAPI server to deploy the winning model
+│   ├── streamlit_app.py         # Streamlit UI Dashboard
 │   └── model.pkl                # The trained algorithm exported from Colab
 ├── data/
 │   ├── raw/                     # Raw downloaded CSV data
@@ -56,31 +57,27 @@ Engineered a binary target (`extreme_heat_warning`) and evaluated:
 **Reinforcement Learning**
 14. **Q-Learning** (Bonus concept numbering adjustment): Using the Bellman Equation to find optimal delivery paths across a municipal grid, avoiding predicted extreme heat zones.
 
-## Phase 5: Production Deployment
-The best performing model (Random Forest) is exported as `model.pkl` and served using a FastAPI backend to provide real-time extreme heat predictions.
+## Phase 5: Production Deployment & Streamlit UI
+The best performing model (Random Forest) is exported as `model.pkl` and served using a FastAPI backend. A beautifully designed Streamlit interface connects to this API, transforming the ML pipeline into a community-usable risk platform.
 
-### How to Run the FastAPI Server
+### How to Run the Production Stack
 
 1. **Install Dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 2. **Ensure Model Exists:** Make sure you have run the Colab Notebook to generate `app/model.pkl`.
-3. **Start the Server:**
+3. **Start the FastAPI Server:**
+   Open a terminal and run:
    ```bash
    cd app
    uvicorn main:app --reload
    ```
-4. **Access the API:**
-   - Interactive Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
-   - Prediction Endpoint: `POST /predict`
-   
-   **Sample JSON Payload:**
-   ```json
-   {
-       "temperature_2m": 35.5,
-       "relative_humidity_2m": 65.0,
-       "solar_radiation": 20.1,
-       "wind_speed_10m": 4.5
-   }
+   *The API will be available at [http://localhost:8000](http://localhost:8000)*
+4. **Start the Streamlit UI Dashboard:**
+   Open a **second terminal** and run:
+   ```bash
+   cd app
+   streamlit run streamlit_app.py
    ```
+   *The beautiful Web UI will open in your browser automatically!*
